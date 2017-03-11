@@ -54,14 +54,38 @@
 		E7D5F3331E74048B00B461B1 /* TipCalculator */ = {
 			isa = PBXGroup;
 			children = (
+				E7D5F3461E74070900B461B1 /* Model */,
+				E7D5F3471E74071B00B461B1 /* View */,
+				E7D5F3481E74072B00B461B1 /* Controller */,
 				E7D5F3341E74048B00B461B1 /* AppDelegate.swift */,
-				E7D5F3361E74048B00B461B1 /* ViewController.swift */,
 				E7D5F3381E74048B00B461B1 /* Main.storyboard */,
 				E7D5F33B1E74048B00B461B1 /* Assets.xcassets */,
 				E7D5F33D1E74048B00B461B1 /* LaunchScreen.storyboard */,
 				E7D5F3401E74048B00B461B1 /* Info.plist */,
 			);
 			path = TipCalculator;
+			sourceTree = "<group>";
+		};
+		E7D5F3461E74070900B461B1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		E7D5F3471E74071B00B461B1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		E7D5F3481E74072B00B461B1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E7D5F3361E74048B00B461B1 /* ViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
