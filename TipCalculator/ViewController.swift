@@ -40,12 +40,14 @@ class ViewController: UIViewController {
 
     
     @IBAction func billAmountDidChange(_ sender: Any) {
-        print("Bill amount has changed")
         setTipCalculationValues ()
         updateUI()
     }
     
-    @IBAction func tipPercentDidChange(_ sender: Any) {
+    @IBAction func tipPercentDidChange(_ sender: UISlider) {
+        let steps: Float = 100
+        let roundedValue = round(sender.value * steps) / steps
+        sender.value = roundedValue
         print(tipPercentageSlider.value)
         setTipCalculationValues ()
         updateUI()
