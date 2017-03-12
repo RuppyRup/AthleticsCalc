@@ -22,26 +22,33 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        func setTipCalculationValues () {
-            tip.tipPercent = Double(tipPercentageSlider.value)
-            tip.billAmount = Double(textField.text!)!
-            tip.calculateTip()
-        }
-        
-        func updateUI() {
-            tipLbl.text = String(format: "£%0.2f", tip.tipAmount)
-            totalLbl.text = String(format: "£%0.2f", tip.totalAmount)
-            tipPercentageLbl.text = "Tip: \(Int(tipPercentageSlider.value * 100)) %"
-        }
+        setTipCalculationValues ()
+        updateUI()
     }
 
+    func updateUI() {
+        tipLbl.text = String(format: "£%0.2f", tip.tipAmount)
+        totalLbl.text = String(format: "£%0.2f", tip.totalAmount)
+        tipPercentageLbl.text = "Tip: \(Int(tipPercentageSlider.value * 100)) %"
+    }
+
+    func setTipCalculationValues () {
+        tip.tipPercent = Double(tipPercentageSlider.value)
+        tip.billAmount = ((textField.text)! as NSString).doubleValue
+        tip.calculateTip()
+    }
+
+    
     @IBAction func billAmountDidChange(_ sender: Any) {
         print("Bill amount has changed")
+        setTipCalculationValues ()
+        updateUI()
     }
     
     @IBAction func tipPercentDidChange(_ sender: Any) {
         print(tipPercentageSlider.value)
+        setTipCalculationValues ()
+        updateUI()
     }
 }
 
