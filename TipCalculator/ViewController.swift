@@ -10,65 +10,59 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var tipPercentageSlider: UISlider!
-    @IBOutlet weak var tipPercentageLbl: UILabel!
-    @IBOutlet weak var tipLbl: UILabel!
-    @IBOutlet weak var totalLbl: UILabel!
-    var paySplitSlider: Int = 4
-    @IBOutlet weak var splitNumberLbl: UILabel!
-    @IBOutlet weak var youPayLbl: UILabel!
     
-    @IBOutlet weak var testSlider: UISlider!
-    // create an instance of tipModel
-    var tip = Tipmodel(billAmount: 0.0, tipPercent: 0.0, numberOfDinners: 1)
+    @IBOutlet weak var radiusSlider: UISlider!
+    @IBOutlet weak var radiusSliderLbl: UILabel!
+    @IBOutlet weak var radiusLbl: UILabel!
+    @IBOutlet weak var straightLbl: UILabel!
+    @IBOutlet weak var straightSliderLbl: UILabel!
+    @IBOutlet weak var distanceLbl: UILabel!
+    @IBOutlet weak var straightSlider: UISlider!
+    
+    
+    // create an instance of TrackModel
+    var myTrack = Trackmodel(radius: 0.0, straight: 0.0)
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setTipCalculationValues ()
+        setTrackCalculationValues ()
         updateUI()
     }
 
     func updateUI() {
-        tipLbl.text = String(format: "£%0.2f", tip.tipAmount)
-        totalLbl.text = String(format: "£%0.2f", tip.totalAmount)
-        tipPercentageLbl.text = "Tip: \(Int(tipPercentageSlider.value * 100)) %"
-        splitNumberLbl.text = "\(Int(round(testSlider.value))) Way Split"
+        radiusLbl.text = String(format: "%0.2fM", myTrack.radius)
+        straightLbl.text = String(format: "%0.2fM", myTrack.straight)
+        radiusSliderLbl.text = "Radius: \(Int(radiusSlider.value)) M"
+        straightSliderLbl.text = "Straight: \(Int(round(straightSlider.value))) M"
         //splitNumberLbl.text = "\(Int(paySplitSlider.value)) Way Split"
-        youPayLbl.text = String(format: "£%0.2f", tip.splitAmount)
+        distanceLbl.text = String(format: "%0.2fM", myTrack.totalDistance)
     }
 
-    func setTipCalculationValues () {
-        tip.tipPercent = Double(tipPercentageSlider.value)
-        tip.billAmount = ((textField.text)! as NSString).doubleValue
-        tip.numberOfDinners = Int(round(testSlider.value))
-        tip.calculateTip()
-        tip.calculateSplit()
+    func setTrackCalculationValues () {
+        myTrack.radius = Double(radiusSlider.value)
+        myTrack.straight = Double(round(straightSlider.value))
+        myTrack.calculateDistance()
     }
 
     
-    @IBAction func billAmountDidChange(_ sender: Any) {
-        setTipCalculationValues ()
-        updateUI()
-    }
     
-    @IBAction func tipPercentDidChange(_ sender: UISlider) {
-        let steps: Float = 100
+    @IBAction func radiusDidChange(_ sender: UISlider) {
+        /*let steps: Float = 100
         let roundedValue = round(sender.value * steps) / steps
-        sender.value = roundedValue
-        print(tipPercentageSlider.value)
+        sender.value = roundedValue*/
+        print(radiusSlider.value)
         //(round(testSlider.value))
-        setTipCalculationValues ()
+        setTrackCalculationValues ()
         updateUI()
     }
     
-    @IBAction func splitSliderDidChange(_ sender: Any) {
-        //print(tipPercentageSlider.value)
-        print(round(testSlider.value))
-        setTipCalculationValues ()
+    @IBAction func straightDidChange(_ sender: Any) {
+        print(round(straightSlider.value))
+        setTrackCalculationValues ()
         updateUI()
     }
+    
     
 }
 
