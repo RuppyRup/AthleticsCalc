@@ -8,49 +8,164 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate{
     
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var tipPercentageSlider: UISlider!
-    @IBOutlet weak var tipPercentageLbl: UILabel!
-    @IBOutlet weak var tipLbl: UILabel!
-    @IBOutlet weak var totalLbl: UILabel!
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            return .portrait
+        }
+    }
     
-    // create an instance of tipModel
-    var tip = Tipmodel(billAmount: 0.0, tipPercent: 0.0)
+    @IBOutlet weak var trackPicker: UIPickerView!
+    @IBOutlet weak var selectTrackLbl: UILabel!
+    @IBOutlet weak var radiusSlider: UISlider!
+    @IBOutlet weak var radiusSliderLbl: UILabel!
+    @IBOutlet weak var radiusLbl: UILabel!
+    @IBOutlet weak var straightLbl: UILabel!
+    @IBOutlet weak var straightSliderLbl: UILabel!
+    @IBOutlet weak var distanceLbl: UILabel!
+    @IBOutlet weak var straightSlider: UISlider!
+    
+    let trackType = ["200M", "300M", "400M", "Variable"]
+    
+    // create an instance of TrackModel
+    var myTrack = Trackmodel(radius: 0.0, straight: 0.0, track: Distance.variable, totalDistance: 0.0)
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setTipCalculationValues ()
-        updateUI()
+        trackPicker.dataSource = self
+        trackPicker.delegate = self
+        
+        switch myTrack.track {
+        case Distance.t200M:
+            setInitial200Values()
+            break
+        case Distance.t300M:
+            setInitial300Values()
+            break
+        case Distance.t400M:
+            setInitial400Values()
+            break
+        default:
+            setTrackCalculationValues ()
+            updateUI()
+        }
+        
     }
 
     func updateUI() {
-        tipLbl.text = String(format: "£%0.2f", tip.tipAmount)
-        totalLbl.text = String(format: "£%0.2f", tip.totalAmount)
-        tipPercentageLbl.text = "Tip: \(Int(tipPercentageSlider.value * 100)) %"
+        radiusLbl.text = String(format: "%0.2fM", myTrack.radius)
+        straightLbl.text = String(format: "%0.2fM", myTrack.straight)
+        radiusSliderLbl.text = "Radius: \(Int(round(radiusSlider.value))) M"
+        straightSliderLbl.text = "Straight: \(Int(round(straightSlider.value))) M"
+        distanceLbl.text = String(format: "%0.2fM", myTrack.totalDistance)
     }
 
-    func setTipCalculationValues () {
-        tip.tipPercent = Double(tipPercentageSlider.value)
-        tip.billAmount = ((textField.text)! as NSString).doubleValue
-        tip.calculateTip()
+    func setInitial200Values () {
+        myTrack.radius = 23.67
+        myTrack.straight = 25.01
+        myTrack.totalDistance = 200.0
+        radiusSlider.setValue(Float(myTrack.radius), animated: true)
+        straightSlider.setValue(Float(myTrack.straight), animated: true)
+    }
+    
+    func setInitial300Values () {
+        myTrack.radius = 34.80
+        myTrack.straight = 40.04
+        myTrack.totalDistance = 300.0
+        radiusSlider.setValue(Float(myTrack.radius), animated: true)
+        straightSlider.setValue(Float(myTrack.straight), animated: true)
+    }
+    
+    func setInitial400Values () {
+        myTrack.radius = 36.50
+        myTrack.straight = 84.39
+        myTrack.totalDistance = 400.0
+        radiusSlider.setValue(Float(myTrack.radius), animated: true)
+        straightSlider.setValue(Float(myTrack.straight), animated: true)
+    }
+    
+    func setTrackCalculationValues () {
+        myTrack.radius = Double(round(radiusSlider.value))
+        myTrack.straight = Double(round(straightSlider.value))
+        myTrack.calculateDistance()
     }
 
     
-    @IBAction func billAmountDidChange(_ sender: Any) {
-        setTipCalculationValues ()
+    @IBAction func radiusDidChange(_ sender: UISlider) {
+        //print(radiusSlider.value)
+        //(round(testSlider.value))
+        //setTrackCalculationValues ()
+        if myTrack.track != Distance.variable {
+            myTrack.radius = Double(round(radiusSlider.value))
+            myTrack.calculateStraight()
+            straightSlider.setValue(Float(myTrack.straight), animated: true)
+        } else {
+            setTrackCalculationValues ()
+        }
         updateUI()
     }
     
-    @IBAction func tipPercentDidChange(_ sender: UISlider) {
-        let steps: Float = 100
-        let roundedValue = round(sender.value * steps) / steps
-        sender.value = roundedValue
-        print(tipPercentageSlider.value)
-        setTipCalculationValues ()
+    @IBAction func straightDidChange(_ sender: Any) {
+        print(round(straightSlider.value))
+        
+        if myTrack.track != Distance.variable {
+            myTrack.straight = Double(round(straightSlider.value))
+            radiusSlider.setValue(Float(myTrack.radius), animated: true)
+            myTrack.calculateRadius()
+        } else {
+            setTrackCalculationValues ()
+        }
         updateUI()
     }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return trackType.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return trackType[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        var attributedString: NSAttributedString!
+        attributedString = NSAttributedString(string: trackType[row], attributes: [NSForegroundColorAttributeName: UIColor.white])
+        return attributedString
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch trackType[row] {
+            case "200M":
+                myTrack.track = Distance.t200M
+                setInitial200Values()
+                print("200m selected")
+                break
+            case "300M":
+                myTrack.track = Distance.t300M
+                setInitial300Values()
+                print("300m selected")
+                break
+            case "400M":
+                myTrack.track = Distance.t400M
+                setInitial400Values()
+                print("400m selected")
+                break
+            case "Variable":
+                myTrack.track = Distance.variable
+                print("Variable selected")
+                break
+            default:
+                myTrack.track = Distance.variable
+                print("Default selected")
+        }
+        updateUI()
+        selectTrackLbl.text = "Track Distance = \(trackType[row])"
+    }
+    
 }
 
