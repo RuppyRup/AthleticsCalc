@@ -40,10 +40,13 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         switch myTrack.track {
         case Distance.t200M:
             setInitial200Values()
+            break
         case Distance.t300M:
             setInitial300Values()
+            break
         case Distance.t400M:
             setInitial400Values()
+            break
         default:
             setTrackCalculationValues ()
             updateUI()
@@ -129,23 +132,33 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         return trackType[row]
     }
     
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        var attributedString: NSAttributedString!
+        attributedString = NSAttributedString(string: trackType[row], attributes: [NSForegroundColorAttributeName: UIColor.white])
+        return attributedString
+    }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch trackType[row] {
             case "200M":
                 myTrack.track = Distance.t200M
                 setInitial200Values()
                 print("200m selected")
+                break
             case "300M":
                 myTrack.track = Distance.t300M
                 setInitial300Values()
                 print("300m selected")
+                break
             case "400M":
                 myTrack.track = Distance.t400M
                 setInitial400Values()
                 print("400m selected")
+                break
             case "Variable":
                 myTrack.track = Distance.variable
                 print("Variable selected")
+                break
             default:
                 myTrack.track = Distance.variable
                 print("Default selected")
