@@ -20,7 +20,7 @@ class Trackmodel {
     private var _totalDistance: Double = 0
     private var _track: Distance = Distance.variable
     
-    let π = M_PI
+    let π = Double.pi
     
     // use getters and setters to access the private variables
     var radius: Double {

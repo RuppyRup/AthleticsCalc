@@ -134,7 +134,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         var attributedString: NSAttributedString!
-        attributedString = NSAttributedString(string: trackType[row], attributes: [NSForegroundColorAttributeName: UIColor.white])
+        attributedString = NSAttributedString(string: trackType[row], attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
         return attributedString
     }
     
