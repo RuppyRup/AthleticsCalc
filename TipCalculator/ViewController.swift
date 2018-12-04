@@ -29,29 +29,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     let trackType = ["200M", "300M", "400M", "Variable"]
     
     // create an instance of TrackModel
-    var myTrack = Trackmodel(radius: 0.0, straight: 0.0, track: Distance.variable, totalDistance: 0.0)
-    
+    var myTrack: Trackmodel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         trackPicker.dataSource = self
         trackPicker.delegate = self
-        
-        switch myTrack.track {
-        case Distance.t200M:
-            setInitial200Values()
-            break
-        case Distance.t300M:
-            setInitial300Values()
-            break
-        case Distance.t400M:
-            setInitial400Values()
-            break
-        default:
-            setTrackCalculationValues ()
-            updateUI()
-        }
-        
+        myTrack = Track200M()
+        radiusSlider.setValue(Float(myTrack.radius), animated: true)
+        straightSlider.setValue(Float(myTrack.straight), animated: true)
+        updateUI()
     }
 
     func updateUI() {
@@ -62,47 +49,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         distanceLbl.text = String(format: "%0.2fM", myTrack.totalDistance)
     }
 
-    func setInitial200Values () {
-        myTrack.radius = 23.67
-        myTrack.straight = 25.01
-        myTrack.totalDistance = 200.0
-        radiusSlider.setValue(Float(myTrack.radius), animated: true)
-        straightSlider.setValue(Float(myTrack.straight), animated: true)
-    }
-    
-    func setInitial300Values () {
-        myTrack.radius = 34.80
-        myTrack.straight = 40.04
-        myTrack.totalDistance = 300.0
-        radiusSlider.setValue(Float(myTrack.radius), animated: true)
-        straightSlider.setValue(Float(myTrack.straight), animated: true)
-    }
-    
-    func setInitial400Values () {
-        myTrack.radius = 36.50
-        myTrack.straight = 84.39
-        myTrack.totalDistance = 400.0
-        radiusSlider.setValue(Float(myTrack.radius), animated: true)
-        straightSlider.setValue(Float(myTrack.straight), animated: true)
-    }
-    
-    func setTrackCalculationValues () {
-        myTrack.radius = Double(round(radiusSlider.value))
-        myTrack.straight = Double(round(straightSlider.value))
-        myTrack.calculateDistance()
-    }
-
-    
     @IBAction func radiusDidChange(_ sender: UISlider) {
-        //print(radiusSlider.value)
-        //(round(testSlider.value))
-        //setTrackCalculationValues ()
-        if myTrack.track != Distance.variable {
+        if myTrack is TrackVariable {
+            myTrack.radius = Double(round(radiusSlider.value))
+            myTrack.straight = Double(round(straightSlider.value))
+            myTrack.calculateDistance()
+            distanceLbl.text = String(format: "%0.2fM", myTrack.totalDistance)
+        } else {
             myTrack.radius = Double(round(radiusSlider.value))
             myTrack.calculateStraight()
             straightSlider.setValue(Float(myTrack.straight), animated: true)
-        } else {
-            setTrackCalculationValues ()
         }
         updateUI()
     }
@@ -110,12 +66,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBAction func straightDidChange(_ sender: Any) {
         print(round(straightSlider.value))
         
-        if myTrack.track != Distance.variable {
+        if myTrack is TrackVariable {
+            myTrack.radius = Double(round(radiusSlider.value))
             myTrack.straight = Double(round(straightSlider.value))
-            radiusSlider.setValue(Float(myTrack.radius), animated: true)
-            myTrack.calculateRadius()
+            myTrack.calculateDistance()
+            distanceLbl.text = String(format: "%0.2fM", myTrack.totalDistance)
         } else {
-            setTrackCalculationValues ()
+            myTrack.straight = Double(round(straightSlider.value))
+            myTrack.calculateRadius()
+            radiusSlider.setValue(Float(myTrack.radius), animated: true)
         }
         updateUI()
     }
@@ -141,26 +100,26 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch trackType[row] {
             case "200M":
-                myTrack.track = Distance.t200M
-                setInitial200Values()
+                myTrack = Track200M()
+                //setInitial200Values()
                 print("200m selected")
                 break
             case "300M":
-                myTrack.track = Distance.t300M
-                setInitial300Values()
+                myTrack = Track300M()
+                //setInitial300Values()
                 print("300m selected")
                 break
             case "400M":
-                myTrack.track = Distance.t400M
-                setInitial400Values()
+                myTrack = Track400M()
+                //setInitial400Values()
                 print("400m selected")
                 break
             case "Variable":
-                myTrack.track = Distance.variable
+                myTrack = TrackVariable()
                 print("Variable selected")
                 break
             default:
-                myTrack.track = Distance.variable
+                myTrack = TrackVariable()
                 print("Default selected")
         }
         updateUI()
