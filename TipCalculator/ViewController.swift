@@ -122,6 +122,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 myTrack = TrackVariable()
                 print("Default selected")
         }
+        radiusSlider.setValue(Float(myTrack.radius), animated: true)
+        straightSlider.setValue(Float(myTrack.straight), animated: true)
         updateUI()
         selectTrackLbl.text = "Track Distance = \(trackType[row])"
     }
