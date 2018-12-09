@@ -57,15 +57,14 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             distanceLbl.text = String(format: "%0.2fM", myTrack.totalDistance)
         } else {
             myTrack.radius = Double(round(radiusSlider.value))
+            print("Radius did change to \(radiusSlider.value)")
             myTrack.calculateStraight()
             straightSlider.setValue(Float(myTrack.straight), animated: true)
         }
         updateUI()
     }
     
-    @IBAction func straightDidChange(_ sender: Any) {
-        print(round(straightSlider.value))
-        
+    @IBAction func straightDidChange(_ sender: UISlider) {
         if myTrack is TrackVariable {
             myTrack.radius = Double(round(radiusSlider.value))
             myTrack.straight = Double(round(straightSlider.value))
@@ -73,6 +72,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             distanceLbl.text = String(format: "%0.2fM", myTrack.totalDistance)
         } else {
             myTrack.straight = Double(round(straightSlider.value))
+            print("Straight did change to \(straightSlider.value)")
             myTrack.calculateRadius()
             radiusSlider.setValue(Float(myTrack.radius), animated: true)
         }
@@ -103,27 +103,23 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 myTrack = Track200M()
                 //setInitial200Values()
                 print("200m selected")
-                break
             case "300M":
                 myTrack = Track300M()
                 //setInitial300Values()
                 print("300m selected")
-                break
             case "400M":
                 myTrack = Track400M()
                 //setInitial400Values()
                 print("400m selected")
-                break
             case "Variable":
                 myTrack = TrackVariable()
                 print("Variable selected")
-                break
             default:
                 myTrack = TrackVariable()
                 print("Default selected")
         }
-        radiusSlider.setValue(Float(myTrack.radius), animated: true)
         straightSlider.setValue(Float(myTrack.straight), animated: true)
+        radiusSlider.setValue(Float(myTrack.radius), animated: true)
         updateUI()
         selectTrackLbl.text = "Track Distance = \(trackType[row])"
     }

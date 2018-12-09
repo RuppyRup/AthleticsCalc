@@ -188,10 +188,6 @@
                                     <constraint firstItem="bx4-1q-SxH" firstAttribute="top" secondItem="Xd3-MT-vsV" secondAttribute="top" constant="52" id="khZ-v0-zNo"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="BUV-0i-L6m">
-                                <rect key="frame" x="30" y="400" width="200" height="200"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </stackView>
                             <pickerView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vj1-Y0-Ocx">
                                 <rect key="frame" x="94" y="567" width="200" height="200"/>
                                 <constraints>
@@ -203,9 +199,8 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="0AC-Qz-lWJ"/>
                                 </connections>
                             </pickerView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Track Distance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axk-Yh-ajb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Track Distance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axk-Yh-ajb">
                                 <rect key="frame" x="89" y="588" width="237" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -214,13 +209,17 @@
                         <color key="backgroundColor" red="0.25098040700000002" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Xd3-MT-vsV" secondAttribute="trailing" id="08m-mK-Q3H"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Axk-Yh-ajb" secondAttribute="bottom" constant="253" id="1Pr-A6-DcI"/>
                             <constraint firstItem="7Sp-Qo-hPR" firstAttribute="top" secondItem="Xd3-MT-vsV" secondAttribute="bottom" constant="133" id="6GW-Xk-2aa"/>
                             <constraint firstItem="Vj1-Y0-Ocx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="74" id="NOh-hQ-a21"/>
                             <constraint firstItem="Xd3-MT-vsV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="X6w-4l-YBO"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Vj1-Y0-Ocx" secondAttribute="bottom" constant="95" id="Zeb-Jv-o3p"/>
+                            <constraint firstItem="Axk-Yh-ajb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="69" id="bHU-OS-rQm"/>
                             <constraint firstItem="Vj1-Y0-Ocx" firstAttribute="top" secondItem="7Sp-Qo-hPR" secondAttribute="bottom" constant="42" id="bTM-N0-Wvc"/>
+                            <constraint firstItem="Axk-Yh-ajb" firstAttribute="top" secondItem="7Sp-Qo-hPR" secondAttribute="bottom" constant="63" id="cRp-nb-duO"/>
                             <constraint firstItem="Xd3-MT-vsV" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cXz-Yg-NAu"/>
                             <constraint firstItem="Vj1-Y0-Ocx" firstAttribute="centerX" secondItem="7Sp-Qo-hPR" secondAttribute="centerX" id="wfW-rx-TBV"/>
+                            <constraint firstItem="Axk-Yh-ajb" firstAttribute="centerX" secondItem="Xd3-MT-vsV" secondAttribute="centerX" id="x41-dU-sfL"/>
                         </constraints>
                     </view>
                     <connections>
